@@ -1,0 +1,21 @@
+# Core dependencies
+Flask==3.0.3
+Werkzeug>=3.0.0
+
+# Machine learning
+scikit-learn==1.5.2
+joblib>=1.4.2
+numpy>=1.26.4
+pandas>=2.2.2
+
+# NLP and scraping
+newspaper3k==0.2.8
+lxml[html_clean]>=5.2.2
+beautifulsoup4>=4.12.3
+requests>=2.32.3
+tqdm>=4.66.5
+nltk>=3.9.1
+
+# Optional: suppress warnings about certificates / html parsing
+feedparser>=6.0.11
+certifi>=2024.8.30

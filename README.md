@@ -1,0 +1,9 @@
+Flask>=3.1.0
+Werkzeug>=3.1.2
+itsdangerous>=2.2.0
+Jinja2>=3.1.5
+numpy>=2.1.3
+pandas>=2.2.3
+scikit-learn>=1.6.1rc1
+joblib>=1.4.2
+nltk>=3.9.1
