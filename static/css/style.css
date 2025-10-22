@@ -1,3 +1,272 @@
-body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
-.card { border-radius: 12px; }
-textarea.form-control { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace; }
+/* --- Global Reset & Root Variables --- */
+:root {
+    --bg-color: #1A1A2E; /* Deep Blue/Purple */
+    --shape-color-1: #6A5ACD; /* SlateBlue (Accent) */
+    --shape-color-2: #3B3B6D; /* Darker Purple */
+    
+    --glass-bg: rgba(59, 59, 109, 0.25); /* Tinted glass */
+    --glass-border: rgba(224, 224, 255, 0.15); /* Light lavender border */
+
+    --text-primary: #E0E0FF; /* Light Lavender */
+    --text-secondary: #A0A0CC; /* Muted Lavender */
+    --text-white: #FFFFFF;
+
+    --primary-accent: #6A5ACD; /* SlateBlue */
+    --primary-accent-dark: #483D8B; /* DarkSlateBlue */
+
+    --neu-shadow-dark: #141425;
+    --neu-shadow-light: #202037;
+    
+    --neu-pressed-shadow-dark: #141425;
+    --neu-pressed-shadow-light: #202037;
+
+    --font-family: 'Poppins', sans-serif;
+    --border-radius-main: 25px;
+    --border-radius-inner: 15px;
+
+    /* Result Colors */
+    --color-real: #4CAF50;
+    --color-fake: #F44336;
+    --color-fake-bg: rgba(244, 67, 54, 0.15);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    overflow: hidden; /* Hides shapes that go off-screen */
+    position: relative;
+    overflow-y: auto;
+}
+
+/* --- Abstract Background Shapes --- */
+.shape {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(150px);
+    opacity: 0.3;
+    z-index: -1;
+}
+
+.shape-1 {
+    width: 400px;
+    height: 400px;
+    background: var(--shape-color-1);
+    top: -100px;
+    left: -100px;
+}
+
+.shape-2 {
+    width: 500px;
+    height: 500px;
+    background: var(--shape-color-2);
+    bottom: -150px;
+    right: -150px;
+}
+
+/* --- Glassmorphic Card --- */
+.glass-card {
+    width: 100%;
+    max-width: 600px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--border-radius-main);
+    padding: 2.5rem;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    /* max-height: 90vh;
+    overflow-y: auto; */
+}
+
+/* --- Header & Title --- */
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.header h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--text-white);
+}
+
+/* Subtle "pressed" icon */
+.header i {
+    font-size: 1.75rem;
+    color: var(--text-secondary);
+    /* Create a subtle pressed/etched look on the glass */
+    text-shadow: 1px 1px 2px var(--neu-shadow-dark), 
+                 -1px -1px 2px var(--neu-shadow-light);
+}
+
+/* --- Input Fields (Neumorphic Pressed) --- */
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+}
+
+.neumorphic-pressed {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-radius: var(--border-radius-inner);
+    padding: 1rem;
+    font-family: var(--font-family);
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    
+    /* The "Pressed" Effect */
+    box-shadow: inset 5px 5px 10px var(--neu-pressed-shadow-dark),
+                inset -5px -5px 10px var(--neu-pressed-shadow-light);
+    transition: box-shadow 0.3s ease;
+}
+
+.neumorphic-pressed:focus {
+    outline: none;
+    /* Slightly stronger shadow on focus */
+    box-shadow: inset 7px 7px 14px var(--neu-pressed-shadow-dark),
+                inset -7px -7px 14px var(--neu-pressed-shadow-light);
+}
+
+.neumorphic-pressed::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
+
+textarea.neumorphic-pressed {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* --- Buttons (Neumorphic Extruded) --- */
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.neumorphic-extruded {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: var(--border-radius-inner);
+    font-family: var(--font-family);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+    /* The "Extruded" Effect */
+    background: linear-gradient(145deg, var(--neu-shadow-light), var(--neu-shadow-dark));
+    color: var(--text-secondary);
+    box-shadow: 5px 5px 12px var(--neu-shadow-dark),
+                -5px -5px 12px var(--neu-shadow-light);
+    text-decoration: none; /* For <a> tags styled as buttons */
+    text-align: center; /* For <a> tags */
+}
+
+.neumorphic-extruded:hover {
+    color: var(--text-primary);
+}
+
+.neumorphic-extruded:active {
+    /* Press the button down */
+    box-shadow: inset 5px 5px 12px var(--neu-shadow-dark),
+                inset -5px -5px 12px var(--neu-shadow-light);
+    color: var(--text-primary);
+}
+
+/* Primary "Analyze" Button */
+#analyze-btn, .button-primary {
+    background: linear-gradient(145deg, var(--primary-accent), var(--primary-accent-dark));
+    color: var(--text-white);
+    box-shadow: 5px 5px 12px var(--neu-shadow-dark),
+                -5px -5px 12px var(--neu-shadow-light);
+}
+
+#analyze-btn:hover, .button-primary:hover {
+    background: linear-gradient(145deg, #7a6ad8, #524594);
+    color: var(--text-white);
+}
+
+#analyze-btn:active, .button-primary:active {
+    box-shadow: inset 5px 5px 12px var(--primary-accent-dark),
+                inset -5px -5px 12px var(--primary-accent);
+}
+
+/* --- Result & Flash Message Display --- */
+.result-container {
+    margin-bottom: 1.5rem;
+    padding: 1.25rem;
+    background: rgba(0, 0, 0, 0.15); /* Subtle inner container */
+    border-radius: var(--border-radius-inner);
+    text-align: center;
+}
+
+.result-container.error {
+    background: var(--color-fake-bg);
+}
+
+.result-container h2 {
+    color: var(--text-secondary);
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.result-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.result-text.real {
+    color: var(--color-real);
+}
+
+.result-text.fake {
+    color: var(--color-fake);
+}
+
+/* Styles for result.html */
+.result-label .result-text {
+    font-size: 2.5rem;
+    margin-bottom: 0;
+}
+.result-confidence .result-text {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--text-white);
+}
+.result-text-box {
+    max-height: 200px; 
+    overflow-y: auto; 
+    white-space: pre-wrap; 
+    word-wrap: break-word; 
+    background: rgba(0,0,0,0.1); 
+    padding: 1rem;
+    text-align: left;
+}

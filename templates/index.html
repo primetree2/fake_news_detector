@@ -2,44 +2,65 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fake News Detector</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body { background-color:#f9fafb; }
-        .card { margin-top:40px; border-radius:16px; }
-    </style>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <link rel="stylesheet" href="static\css\style.css">
 </head>
 <body>
-<div class="container">
-    <div class="card shadow p-4 mx-auto" style="max-width:700px;">
-        <h2 class="text-center mb-3">📰 Fake News Detector</h2>
-        <p class="text-muted text-center">Paste article text or enter a URL</p>
+
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+
+    <main class="glass-card">
+        <div class="header">
+            <i class="fa-solid fa-magnifying-glass-chart"></i>
+            <h1>Fake News Detector</h1>
+        </div>
 
         {% with messages = get_flashed_messages(with_categories=true) %}
           {% if messages %}
+            <div class="result-container error">
             {% for category, msg in messages %}
-              <div class="alert alert-{{ category }} small">{{ msg }}</div>
+              <p class="result-text fake" style="font-size: 1.1rem;">{{ msg }}</p>
             {% endfor %}
+            </div>
           {% endif %}
         {% endwith %}
 
-        <form method="post" action="/predict">
-            <div class="mb-3">
-                <label class="form-label">Article text</label>
-                <textarea name="text" class="form-control" rows="6" placeholder="Paste text here...">{{ text or '' }}</textarea>
+
+        <form action="/predict" method="post">
+            
+            <div class="input-group">
+                <label for="news_text">Paste News Article Below</label>
+                <textarea id="news_text" name="text" rows="10" class="neumorphic-pressed" placeholder="Enter the full text of the news article...">{{ text or '' }}</textarea>
             </div>
 
-            <div class="mb-3">
-                <label class="form-label">Article URL</label>
-                <input type="url" name="url" class="form-control" placeholder="https://example.com/news-article" value="{{ url or '' }}">
+            <div class="input-group">
+                <label for="news_url">Or Enter a URL</label>
+                <input type="url" id="news_url" name="url" class="neumorphic-pressed" placeholder="https://example.com/news-article" value="{{ url or '' }}">
             </div>
 
-            <div class="d-flex gap-2 justify-content-center">
-                <button type="submit" class="btn btn-primary">Analyze</button>
-                <a href="/" class="btn btn-outline-secondary">Clear</a>
+            <div class="button-group">
+                <button type="button" id="clear-btn" class="neumorphic-extruded">Clear</button>
+                <button type="submit" id="analyze-btn" class="neumorphic-extruded">Analyze</button>
             </div>
         </form>
-    </div>
-</div>
+    </main>
+
+    <script>
+        // Simple script for the clear button
+        document.getElementById('clear-btn').addEventListener('click', function() {
+            document.getElementById('news_text').value = '';
+            document.getElementById('news_url').value = '';
+        });
+    </script>
+
 </body>
 </html>
